@@ -1,0 +1,18 @@
+name: tests # The label shown next to the green tick or red cross on GitHub
+
+on: [push, pull_request] # Run whenever someone pushes a change or opens or updates a pull request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # Use a fresh Linux computer on GitHub’s servers, a new one every time
+    steps:
+      - uses: actions/checkout@v4 # Copy the repository’s files onto that computer
+
+      - uses: actions/setup-python@v5 # python Install Python 3.12, the same version as the codespace
+        with:
+          python-version: "3.12"
+          cache: "pip" # Remember downloaded packages between runs, so later runs are faster
+
+      - run: pip install -r requirements.txt # Buy the shopping list, the same one the codespace uses
+
+      - run: pytest # Run every test_*.py file; if any test fails, the check turns red
